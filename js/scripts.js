@@ -69,7 +69,7 @@ $(document).ready(function() {
 
     //pass variables to animation page
     var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial;
-    window.location.href = "animate.html" + queryString;
+    $("h4#link").html("<a href='animate.html" + queryString + "' target='_blank'>See your table</a>");
   });
 
 });

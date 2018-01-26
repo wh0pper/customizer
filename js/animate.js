@@ -1,8 +1,41 @@
 //parse table parameters from form input
-var type height topMaterial legMaterial;
+//parameters order: [type, height, top material, leg material]
 var queryString = decodeURIComponent(window.location.search);
-var parameters = queryString.split("&");
+var parsedParameters = queryString.split("&");
+var parameters = [];
+parsedParameters.forEach(function(parameter) {
+  var vals = parameter.split("=");
+  parameters.push(vals[1]);
+})
 
+//move from table properties to animation variables
+var tableWidth;
+var tableLength;
+if (parameters[0] === "end") {
+  tableWidth = tableLength = 18;
+} else if (parameters[0] === "work") {
+  tableWidth = 22;
+  tableLength = 40;
+} else if (parameters[0] === "coffee") {
+  tableWidth = 20;
+  tableLength = 48;
+} else if (parameters[0] === "dining") {
+  tableWidth = 40;
+  tableLength = 80;
+} else {
+  tableWidth = tableLength = 20;
+}
+
+var tableHeight;
+if (parameters[1] === "small"){
+  tableHeight = 16;
+} else if (parameters[1] === "medium"){
+  tableHeight = 30;
+} else if (parameters[1] === "large"){
+  tableHeight = 44;
+} else {
+  tableHeight = 24;
+}
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -10,6 +43,7 @@ var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeig
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setClearColor( 0xfff6e6 );
 document.body.appendChild( renderer.domElement );
 
 
@@ -20,23 +54,23 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 
 //table top geometry
 
-var topGeometry = new THREE.BoxGeometry( 20, 1, 10 );
+var topGeometry = new THREE.BoxGeometry( tableLength, 1, tableWidth );
 var topMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
-tableTop.position.set( 0, 5, 0 )
+tableTop.position.set( 0, tableHeight/2, 0 )
 scene.add( tableTop );
 
 //table legs geom
-var legGeometry = new THREE.BoxGeometry( 1, 10, 1);
+var legGeometry = new THREE.BoxGeometry( 1, tableHeight, 1);
 var legMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
 var legOne = new THREE.Mesh( legGeometry, legMaterial );
-legOne.position.set( 9.5, 0, 4.5 );
+legOne.position.set( (tableLength-1)/2, 0, (tableWidth-1)/2 );
 var legTwo = new THREE.Mesh( legGeometry, legMaterial )
-legTwo.position.set( -9.5, 0, 4.5 );
+legTwo.position.set( -(tableLength-1)/2, 0, (tableWidth-1)/2 );
 var legThree = new THREE.Mesh( legGeometry, legMaterial )
-legThree.position.set( -9.5, 0, -4.5 );
+legThree.position.set( -(tableLength-1)/2, 0, -(tableWidth-1)/2 );
 var legFour = legThree.clone();
-legFour.position.set( 9.5, 0, -4.5 );
+legFour.position.set( (tableLength-1)/2, 0, -(tableWidth-1)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
 
 
