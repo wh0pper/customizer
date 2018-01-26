@@ -55,14 +55,14 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 //table top geometry
 
 var topGeometry = new THREE.BoxGeometry( tableLength, 1, tableWidth );
-var topMaterial = new THREE.MeshPhongMaterial( { color: 0xd2b48c } );
+var topMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
 tableTop.position.set( 0, tableHeight/2, 0 )
 scene.add( tableTop );
 
 //table legs geom
 var legGeometry = new THREE.BoxGeometry( 1, tableHeight, 1);
-var legMaterial = new THREE.MeshPhongMaterial( { color: 0xd2b48c } );
+var legMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
 var legOne = new THREE.Mesh( legGeometry, legMaterial );
 legOne.position.set( (tableLength-1)/2, 0, (tableWidth-1)/2 );
 var legTwo = new THREE.Mesh( legGeometry, legMaterial )
@@ -73,8 +73,8 @@ var legFour = legThree.clone();
 legFour.position.set( (tableLength-1)/2, 0, -(tableWidth-1)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
 
-var light = new THREE.PointLight( 0x404040 ); // soft white light
-light.position.set( 40, 40, 40);
+var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 ); // soft white light
+// light.position.set( 40, 40, 40);
 scene.add( light );
 
 // //line geometry and material
