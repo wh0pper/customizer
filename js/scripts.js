@@ -1,8 +1,7 @@
-function Table(type, height, material[], extras) {
+function Table(type, height, material, extras) {
   this.type = type;
   this.height = height;
-  this.topMaterial = material[1];
-  this.legMaterial = material[2];
+  this.material = material; //array of top and leg materials
   this.extras = extras; //array of addOns
   this.price = 0;
 }
@@ -30,12 +29,39 @@ Table.prototype.pricer = function() {
     this.price += 0;
   }
 
-  this.extras.forEach(function(each) {
-    this.price += 15;
+  if (this.material[0] === "beech") {
+    this.price += 30;
+  } else if (this.material[0] === "oak") {
+    this.price += 50;
+  } else if (this.material[0] === "maple") {
+    this.price += 60;
+  } else if (this.material[0] === "walnut") {
+    this.price += 70;
+  } else {
+    this.price += 0;
+  }
+
+  var self=this;
+  this.extras.forEach(function() {
+    self.price += 15;
   })
 }
 
 $(document).ready(function() {
-  $("#inputForm").submit
+  $("#inputForm").submit(function(event) {
+    event.preventDefault();
+    var inputType = $("select#type").val();
+    var inputHeight = $("select#height").val();
+    var inputMaterialArray = [$("input:radio[name=topMaterial]:checked").val(), $("input:radio[name=legMaterial]:checked").val()];
+    var inputExtrasArray = [];
+    $('input[type="checkbox"]').each(function() {
+      inputExtrasArray.push($(this).val());
+    });
+
+    table = new Table(inputType, inputHeight, inputMaterialArray, inputExtrasArray);
+    table.pricer();
+
+
+  });
 
 });
