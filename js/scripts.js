@@ -54,7 +54,9 @@ $(document).ready(function() {
     event.preventDefault();
     var inputType = $("select#type").val();
     var inputHeight = $("select#height").val();
-    var inputMaterialArray = [$("input:radio[name=topMaterial]:checked").val(), $("input:radio[name=legMaterial]:checked").val()];
+    var inputTopMaterial = $("input:radio[name=topMaterial]:checked").val();
+    var inputLegMaterial = $("input:radio[name=legMaterial]:checked").val();
+    var inputMaterialArray = [inputTopMaterial, inputLegMaterial];
     var inputExtrasArray = [];
     $('input[type="checkbox"]:checked').each(function() {
       inputExtrasArray.push($(this).val());
@@ -64,6 +66,10 @@ $(document).ready(function() {
     table.pricer();
     console.log(table);
     $("#outputPrice").text("$" + table.price);
+
+    //pass variables to animation page
+    var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial;
+    window.location.href = "animate.html" + queryString;
   });
 
 });
