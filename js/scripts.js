@@ -47,21 +47,23 @@ Table.prototype.pricer = function() {
   })
 }
 
+var table = undefined;
 $(document).ready(function() {
+
   $("#inputForm").submit(function(event) {
     event.preventDefault();
     var inputType = $("select#type").val();
     var inputHeight = $("select#height").val();
     var inputMaterialArray = [$("input:radio[name=topMaterial]:checked").val(), $("input:radio[name=legMaterial]:checked").val()];
     var inputExtrasArray = [];
-    $('input[type="checkbox"]').each(function() {
+    $('input[type="checkbox"]:checked').each(function() {
       inputExtrasArray.push($(this).val());
     });
 
     table = new Table(inputType, inputHeight, inputMaterialArray, inputExtrasArray);
     table.pricer();
-
-
+    console.log(table);
+    $("#outputPrice").text("$" + table.price);
   });
 
 });
