@@ -41,6 +41,14 @@ Table.prototype.pricer = function() {
     this.price += 0;
   }
 
+  if (this.material[1] === "wood") {
+    this.price += 15;
+  } else if (this.material[1] === "painted"){
+    this.price += 10;
+  } else {
+    this.price -= 10;
+  }
+
   var self=this;
   this.extras.forEach(function() {
     self.price += 15;
