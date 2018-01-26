@@ -14,9 +14,9 @@
   <body>
     <div class="container">
 
-      <!-- <h1>Make a custom table</h1> -->
+      <h1>Make a custom table</h1>
 
-      <form>
+      <form id=inputForm>
         <label for="tableType">Type:</label>
         <select class="form-control" id="size">
           <option></option>
@@ -34,15 +34,23 @@
           <option value="large">44"</option>
         </select>
 
-        <!-- <label for="tableMaterial">Material:</label>
-        <input type="radio" name="material" value="" -->
+        <label for="tableMaterial">Tabletop Material:</label>
+        <input type="radio" name="topMaterial" value="beech"> Beech
+        <input type="radio" name="topMaterial" value="oak"> Oak
+        <input type="radio" name="topMaterial" value="maple"> Maple
+        <input type="radio" name="topMaterial" value="walnut"> Walnut<br>
+
+        <label for="tableMaterial">Table Legs:</label>
+        <input type="radio" name="legMaterial" value="wood"> Same as top
+        <input type="radio" name="legMaterial" value="metal"> Metal
+        <input type="radio" name="legMaterial" value="painted"> Painted Metal<br>
 
         <!-- <div class="form-control"> -->
           <label for="tableOptions">Table accessories:</label><br>
             <input type="checkbox" name="addOn" value="coaster">Matching Coasters<br>
             <input type="checkbox" name="addOn" value="floor">Floor protectors<br>
-            <input type="checkbox" name="addOn" value="">Painted finish<br>
-            <input type="checkbox" name="addOn" value="">Home Delivery<br><br>
+            <input type="checkbox" name="addOn" value="lacquer">Premium Lacquer<br>
+            <input type="checkbox" name="addOn" value="deliver">Home Delivery<br><br>
         <!-- </div> -->
         <button type="submit">Submit</button>
       </form>
