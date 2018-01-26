@@ -38,7 +38,7 @@ if (parameters[1] === "small"){
 }
 
 var legThickness = 1; //thick for wood, thin for metal
-var legColor = 0x000000; //wood or metal
+var legColor = 0x000000; //wood (same) or metal (black)
 if (parameters[3] === "wood") {
   legThickness = 2;
   legColor = 0xd2b48c;
@@ -58,14 +58,14 @@ renderer.setClearColor( 0xfff6e6 );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.set(0, 0, 60);
+camera.position.set(0, 0, 120);
 camera.lookAt(new THREE.Vector3(0,0,0));
 
 
 
 //table top geometry
 
-var topGeometry = new THREE.BoxGeometry( tableLength, 1, tableWidth );
+var topGeometry = new THREE.BoxGeometry( tableLength, 4, tableWidth );
 var topMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
 tableTop.position.set( 0, (tableHeight+1)/2, 0 )
@@ -84,23 +84,9 @@ var legFour = legThree.clone();
 legFour.position.set( (tableLength-legThickness)/2, 0, -(tableWidth-legThickness)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
 
+//lightsource
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 ); // soft white light
-// light.position.set( 40, 40, 40);
 scene.add( light );
-
-// //line geometry and material
-// var lineMat = new THREE.LineBasicMaterial({ color: 0x0000ff });
-//
-// var lineGeo = new THREE.Geometry();
-// lineGeo.vertices.push(new THREE.Vector3(-10, 0, 0));
-// lineGeo.vertices.push(new THREE.Vector3(0, 10, 0));
-// // lineGeo.vertices.push(new THREE.Vector3(10, 0, 0));
-//
-// //combine geo and mat into line object
-// var line = new THREE.Line(lineGeo, lineMat);
-// scene.add(line);
-
-
 
 renderer.render(scene, camera);
 
