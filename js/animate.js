@@ -55,14 +55,14 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 //table top geometry
 
 var topGeometry = new THREE.BoxGeometry( tableLength, 1, tableWidth );
-var topMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
+var topMaterial = new THREE.MeshPhongMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
 tableTop.position.set( 0, tableHeight/2, 0 )
 scene.add( tableTop );
 
 //table legs geom
 var legGeometry = new THREE.BoxGeometry( 1, tableHeight, 1);
-var legMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
+var legMaterial = new THREE.MeshPhongMaterial( { color: 0xd2b48c } );
 var legOne = new THREE.Mesh( legGeometry, legMaterial );
 legOne.position.set( (tableLength-1)/2, 0, (tableWidth-1)/2 );
 var legTwo = new THREE.Mesh( legGeometry, legMaterial )
@@ -73,6 +73,9 @@ var legFour = legThree.clone();
 legFour.position.set( (tableLength-1)/2, 0, -(tableWidth-1)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
 
+var light = new THREE.PointLight( 0x404040 ); // soft white light
+light.position.set( 40, 40, 40);
+scene.add( light );
 
 // //line geometry and material
 // var lineMat = new THREE.LineBasicMaterial({ color: 0x0000ff });
@@ -97,9 +100,7 @@ controls.addEventListener( 'change', function() { renderer.render(scene, camera)
 var animate = function () {
   requestAnimationFrame( animate );
 
-  // scene.rotation.y += 0.01;
-  // scene.rotation.x += 0.01;
-  // tableTop.rotation.z += 0.01;
+  scene.rotation.y += 0.005;
 
   renderer.render(scene, camera);
 };
