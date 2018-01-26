@@ -12,15 +12,15 @@ parsedParameters.forEach(function(parameter) {
 var tableWidth;
 var tableLength;
 if (parameters[0] === "end") {
-  tableWidth = tableLength = 18;
+  tableWidth = tableLength = 22;
 } else if (parameters[0] === "work") {
-  tableWidth = 22;
-  tableLength = 40;
+  tableWidth = 28;
+  tableLength = 44;
 } else if (parameters[0] === "coffee") {
-  tableWidth = 20;
+  tableWidth = 26;
   tableLength = 48;
 } else if (parameters[0] === "dining") {
-  tableWidth = 40;
+  tableWidth = 48;
   tableLength = 80;
 } else {
   tableWidth = tableLength = 20;
@@ -32,10 +32,21 @@ if (parameters[1] === "small"){
 } else if (parameters[1] === "medium"){
   tableHeight = 30;
 } else if (parameters[1] === "large"){
-  tableHeight = 44;
+  tableHeight = 40;
 } else {
   tableHeight = 24;
 }
+
+var legThickness = 1; //thick for wood, thin for metal
+var legColor = 0x000000; //wood or metal
+if (parameters[3] === "wood") {
+  legThickness = 2;
+  legColor = 0xd2b48c;
+} else {
+  legThikness = 1;
+  legColor = 0x000000;
+}
+
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -57,20 +68,20 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 var topGeometry = new THREE.BoxGeometry( tableLength, 1, tableWidth );
 var topMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
-tableTop.position.set( 0, tableHeight/2, 0 )
+tableTop.position.set( 0, (tableHeight+1)/2, 0 )
 scene.add( tableTop );
 
 //table legs geom
-var legGeometry = new THREE.BoxGeometry( 1, tableHeight, 1);
-var legMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
+var legGeometry = new THREE.BoxGeometry( legThickness, tableHeight, legThickness );
+var legMaterial = new THREE.MeshLambertMaterial( { color: legColor } );
 var legOne = new THREE.Mesh( legGeometry, legMaterial );
-legOne.position.set( (tableLength-1)/2, 0, (tableWidth-1)/2 );
+legOne.position.set( (tableLength-legThickness)/2, 0, (tableWidth-legThickness)/2 );
 var legTwo = new THREE.Mesh( legGeometry, legMaterial )
-legTwo.position.set( -(tableLength-1)/2, 0, (tableWidth-1)/2 );
+legTwo.position.set( -(tableLength-legThickness)/2, 0, (tableWidth-legThickness)/2 );
 var legThree = new THREE.Mesh( legGeometry, legMaterial )
-legThree.position.set( -(tableLength-1)/2, 0, -(tableWidth-1)/2 );
+legThree.position.set( -(tableLength-legThickness)/2, 0, -(tableWidth-legThickness)/2 );
 var legFour = legThree.clone();
-legFour.position.set( (tableLength-1)/2, 0, -(tableWidth-1)/2 );
+legFour.position.set( (tableLength-legThickness)/2, 0, -(tableWidth-legThickness)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
 
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 ); // soft white light
