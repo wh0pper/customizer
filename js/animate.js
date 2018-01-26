@@ -7,13 +7,10 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.set(0, 0, 100);
+camera.position.set(0, 0, 60);
+camera.lookAt(new THREE.Vector3(0,0,0));
 
-// cube geometry
-var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-var cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+
 
 //table top geometry
 
@@ -23,14 +20,16 @@ var tableTop = new THREE.Mesh( topGeometry, topMaterial );
 scene.add( tableTop );
 
 //table legs geom
-var legOneGeometry = new THREE.BoxGeometry( 1, 10, 1)
-var legTwoGeometry = new THREE.BoxGeometry( 1, 10, 1)
-var legThreeGeometry = new THREE.BoxGeometry( 1, 10, 1)
-var legFourGeometry = new THREE.BoxGeometry( 1, 10, 1)
-var legOneMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
-var legTwoMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
-var legThreeMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
-var legFourMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
+var legGeometry = new THREE.BoxGeometry( 1, 10, 1);
+var legMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
+var legOne = new THREE.Mesh( legGeometry, legMaterial );
+legOne.position.set( 9.5, 5, 4.5 );
+var legTwo = new THREE.Mesh( legGeometry, legMaterial )
+legTwo.position.set( -9.5, 5, 4.5 );
+
+scene.add( legOne,legTwo );
+
+
 // //line geometry and material
 // var lineMat = new THREE.LineBasicMaterial({ color: 0x0000ff });
 //
@@ -46,6 +45,9 @@ var legFourMaterial = new THREE.MeshBasicMaterial( { color: 0xd2b48c } );
 
 
 renderer.render(scene, camera);
+
+var controls = new THREE.OrbitControls( camera );
+controls.addEventListener( 'change', function() { renderer.render(scene, camera); } );
 
 //animate scene
 var animate = function () {
