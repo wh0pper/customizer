@@ -1,5 +1,5 @@
 //parse table parameters from form input
-//parameters order: [type, height, top material, leg material]
+//parameters order: [type, height, top material, leg material, leg color]
 var queryString = decodeURIComponent(window.location.search);
 var parsedParameters = queryString.split("&");
 var parameters = [];
@@ -38,7 +38,7 @@ if (parameters[1] === "small"){
 }
 
 var legThickness = 1; //thick for wood, thin for metal
-var legColor = 0x000000; //wood (same) or metal (black)
+var legColor = parameters[4]; //wood (same) or metal (black)
 if (parameters[3] === "wood") {
   legThickness = 2;
   legColor = 0xd2b48c;

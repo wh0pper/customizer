@@ -1,7 +1,7 @@
 function Table(type, height, material, extras) {
   this.type = type;
   this.height = height;
-  this.material = material; //array of top and leg materials
+  this.material = material; //array of top and leg materials [top, leg, legcolor(if painted)]
   this.extras = extras; //array of addOns
   this.price = 0;
 }
@@ -42,9 +42,9 @@ Table.prototype.pricer = function() {
   }
 
   if (this.material[1] === "wood") {
-    this.price += 15;
-  } else if (this.material[1] === "painted"){
     this.price += 10;
+  } else if (this.material[1] === "painted"){
+    this.price += 15;
   } else {
     this.price -= 10;
   }
@@ -64,19 +64,19 @@ $(document).ready(function() {
     var inputHeight = $("select#height").val();
     var inputTopMaterial = $("input:radio[name=topMaterial]:checked").val();
     var inputLegMaterial = $("input:radio[name=legMaterial]:checked").val();
-    var inputMaterialArray = [inputTopMaterial, inputLegMaterial];
+    var inputColor = $("input#color").val();
+    var inputMaterialArray = [inputTopMaterial, inputLegMaterial, inputColor];
     var inputExtrasArray = [];
     $('input[type="checkbox"]:checked').each(function() {
       inputExtrasArray.push($(this).val());
     });
 
-    table = new Table(inputType, inputHeight, inputMaterialArray, inputExtrasArray);
+    var table = new Table(inputType, inputHeight, inputMaterialArray, inputExtrasArray);
     table.pricer();
-    console.log(table);
     $("#outputPrice").text("$" + table.price);
 
-    //pass variables to animation page
-    var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial;
+    // pass variables to animation page
+    var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial + "&color=" + inputColor;
     $("h4#link").html("<a href='animate.html" + queryString + "' target='_blank'>See your table</a>");
   });
 
