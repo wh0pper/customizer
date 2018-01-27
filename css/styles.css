@@ -1,13 +1,19 @@
-#canvas {
-background-color: #FFF;
-width: 500px;
-height: 500px;
-}
-
 .container {
   padding: 100px;
 }
 
 body {
   background-color: whitesmoke;
+}
+
+.revealPaint {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+input[value="painted"]:checked ~ .revealPaint {
+  opacity: 1;
+  max-height: 100px;
+  overflow: hidden;
 }

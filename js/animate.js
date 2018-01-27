@@ -68,7 +68,7 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 var topGeometry = new THREE.BoxGeometry( tableLength, 4, tableWidth );
 var topMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
-tableTop.position.set( 0, (tableHeight+1)/2, 0 )
+tableTop.position.set( 0, (tableHeight+4)/2, 0 )
 scene.add( tableTop );
 
 //table legs geom
