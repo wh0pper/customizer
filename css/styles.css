@@ -9,11 +9,3 @@ body {
 .revealPaint {
   display: none;
 }
-
-/* input[value=painted]:checked ~ .revealPaint  */
-
-{
-  opacity: 1;
-  max-height: 100px;
-  overflow: hidden;
-}

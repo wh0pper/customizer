@@ -56,10 +56,23 @@ Table.prototype.pricer = function() {
 }
 
 var table = undefined;
+
+
+
 $(document).ready(function() {
+
+  $("#legMaterial").click(function() {
+    if (document.getElementById('paintRadio').checked === true) {
+      console.log("radio clicked");
+      $(".revealPaint").show();
+    } else {
+      $(".revealPaint").hide();
+    }
+  });
 
   $("#inputForm").submit(function(event) {
     event.preventDefault();
+
     var inputType = $("select#type").val();
     var inputHeight = $("select#height").val();
     var inputTopMaterial = $("input:radio[name=topMaterial]:checked").val();
