@@ -75,9 +75,15 @@ $(document).ready(function() {
     table.pricer();
     $("#outputPrice").text("$" + table.price);
 
-    // pass variables to animation page
-    var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial + "&color=" + inputColor;
-    $("h4#link").html("<a href='animate.html" + queryString + "' target='_blank'>See your table</a>");
+    // pass variables to animation page using url
+    // var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial + "&color=" + inputColor;
+    $("h4#link").html("<a href='animate.html' target='_blank'>See your table</a>");
+
+    //pass variables using local storage
+    localStorage.setItem('type', inputType);
+    localStorage.setItem('height', inputHeight);
+    localStorage.setItem('material', inputMaterialArray);
+
   });
 
 });

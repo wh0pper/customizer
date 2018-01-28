@@ -1,25 +1,39 @@
-//parse table parameters from form input
+//parse table parameters from form input using url
 //parameters order: [type, height, top material, leg material, leg color]
-var queryString = decodeURIComponent(window.location.search);
-var parsedParameters = queryString.split("&");
-var parameters = [];
-parsedParameters.forEach(function(parameter) {
-  var vals = parameter.split("=");
-  parameters.push(vals[1]);
-})
+// var queryString = decodeURIComponent(window.location.search);
+// var parsedParameters = queryString.split("&");
+// var parameters = [];
+// parsedParameters.forEach(function(parameter) {
+//   var vals = parameter.split("=");
+//   parameters.push(vals[1]);
+// })
+
+//parse parameters using local storagerr
+if (localStorage.type) {
+  var tableType = localStorage.type;
+  var tableHeight = localStorage.height;
+  var tableMaterials = localStorage.material;
+} else {
+  var tableType = 'end';
+  var tableHeight = 'small';
+  var tableMaterials = ['oak','metal','#090f0f'];
+}
+
+localStorage.clear();
+
 
 //move from table properties to animation variables
 var tableWidth;
 var tableLength;
-if (parameters[0] === "end") {
+if (tableType === "end") {
   tableWidth = tableLength = 22;
-} else if (parameters[0] === "work") {
+} else if (tableType === "work") {
   tableWidth = 28;
   tableLength = 44;
-} else if (parameters[0] === "coffee") {
+} else if (tableType === "coffee") {
   tableWidth = 26;
   tableLength = 48;
-} else if (parameters[0] === "dining") {
+} else if (tableType === "dining") {
   tableWidth = 48;
   tableLength = 80;
 } else {
@@ -27,24 +41,24 @@ if (parameters[0] === "end") {
 }
 
 var tableHeight;
-if (parameters[1] === "small"){
+if (tableHeight === "small"){
   tableHeight = 16;
-} else if (parameters[1] === "medium"){
+} else if (tableHeight === "medium"){
   tableHeight = 30;
-} else if (parameters[1] === "large"){
+} else if (tableHeight === "large"){
   tableHeight = 40;
 } else {
   tableHeight = 24;
 }
 
-var legThickness = 1; //thick for wood, thin for metal
-var legColor = parameters[4]; //wood (same) or metal (black)
-if (parameters[3] === "wood") {
+var legThickness = 1;
+var legColor = 0x000000; //thick for wood, thin for metal
+if ((tableMaterials[1]) === "wood") {
   legThickness = 2;
   legColor = 0xd2b48c;
 } else {
-  legThikness = 1;
-  legColor = 0x000000;
+  legThickness = 1;
+  legColor = tableMaterials[2].replace(/#/,"0x");
 }
 
 

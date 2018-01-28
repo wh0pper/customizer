@@ -7,12 +7,12 @@ body {
 }
 
 .revealPaint {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
+  display: none;
 }
 
-input[value="painted"]:checked ~ .revealPaint {
+/* input[value=painted]:checked ~ .revealPaint  */
+
+{
   opacity: 1;
   max-height: 100px;
   overflow: hidden;
