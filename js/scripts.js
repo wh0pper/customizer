@@ -57,7 +57,6 @@ Table.prototype.pricer = function() {
 
 var tablesArray = [];
 
-
 $(document).ready(function() {
 
   $("#legMaterial").click(function() {
@@ -88,14 +87,11 @@ $(document).ready(function() {
     $("#outputPrice").text("$" + table.price);
     tablesArray.push(table);
 
-  
     $("h4#link").html("<a href='animate.html' target='_blank'>See your table</a>");
 
     //pass variables using local storage
     localStorage.setItem('type', inputType);
     localStorage.setItem('height', inputHeight);
     localStorage.setItem('material', inputMaterialArray);
-
   });
-
 });
