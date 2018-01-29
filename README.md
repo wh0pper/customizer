@@ -26,10 +26,10 @@ This website was created for the code review in week 4 of the Epicodus web devel
 
 * access this site <a href="https://wh0pper.github.io/customizer">here</a>
 
-Known bugs:
-Pricing and link to animation are not displaying when published on gh-pages at time of submission despite working properly locally. I will be looking into this over the weekend.
+Known bugs (resolved since submission):
+* Pricing and link to animation are not displaying when published on gh-pages at time of submission despite working properly locally. I will be looking into this over the weekend. --turned out to be an issue with the jQuery CDN used
 
-as of submission on 1/26 I haven't finished implementing the custom color feature in the animation. I will continue working on this.
+* As of submission on 1/26 I haven't finished implementing the custom color feature in the animation. I will continue working on this. --finished 1/28
 
 ## Support and contact details
 
