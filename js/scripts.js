@@ -55,15 +55,13 @@ Table.prototype.pricer = function() {
   })
 }
 
-var table = undefined;
-
+var tablesArray = [];
 
 
 $(document).ready(function() {
 
   $("#legMaterial").click(function() {
     if (document.getElementById('paintRadio').checked === true) {
-      console.log("radio clicked");
       $(".revealPaint").show();
     } else {
       $(".revealPaint").hide();
@@ -85,11 +83,12 @@ $(document).ready(function() {
     });
 
     var table = new Table(inputType, inputHeight, inputMaterialArray, inputExtrasArray);
+    console.log(table);
     table.pricer();
     $("#outputPrice").text("$" + table.price);
+    tablesArray.push(table);
 
-    // pass variables to animation page using url
-    // var queryString = "?type=" + inputType + "&height=" + inputHeight + "&material1=" + inputTopMaterial + "&material2=" + inputLegMaterial + "&color=" + inputColor;
+  
     $("h4#link").html("<a href='animate.html' target='_blank'>See your table</a>");
 
     //pass variables using local storage

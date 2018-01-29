@@ -1,21 +1,13 @@
-//parse table parameters from form input using url
-//parameters order: [type, height, top material, leg material, leg color]
-// var queryString = decodeURIComponent(window.location.search);
-// var parsedParameters = queryString.split("&");
-// var parameters = [];
-// parsedParameters.forEach(function(parameter) {
-//   var vals = parameter.split("=");
-//   parameters.push(vals[1]);
-// })
-
 //parse parameters using local storagerr
+//parameters order: [type, height, top material, leg material, leg color]
 if (localStorage.type) {
   var tableType = localStorage.type;
-  var tableHeight = localStorage.height;
-  var tableMaterials = localStorage.material;
+  var tableHeightInput = localStorage.height;
+  var tableMaterials = localStorage.material.split(",");
 } else {
+  //default table if no inputs
   var tableType = 'end';
-  var tableHeight = 'small';
+  var tableHeightInput = 'small';
   var tableMaterials = ['oak','metal','#090f0f'];
 }
 
@@ -41,26 +33,30 @@ if (tableType === "end") {
 }
 
 var tableHeight;
-if (tableHeight === "small"){
+if (tableHeightInput === "small"){
   tableHeight = 16;
-} else if (tableHeight === "medium"){
+} else if (tableHeightInput === "medium"){
   tableHeight = 30;
-} else if (tableHeight === "large"){
+} else if (tableHeightInput === "large"){
   tableHeight = 40;
 } else {
   tableHeight = 24;
 }
 
-var legThickness = 1;
-var legColor = 0x000000; //thick for wood, thin for metal
-if ((tableMaterials[1]) === "wood") {
+//defaults
+var legThickness; //thick for wood, thin for metal
+var legColor;
+if (tableMaterials[1] === "wood") {
   legThickness = 2;
   legColor = 0xd2b48c;
-} else {
+} else if (tableMaterials[1] === "metal") {
   legThickness = 1;
-  legColor = tableMaterials[2].replace(/#/,"0x");
+  legColor = 0x000000;
+} else { //Materials[1]===painted
+  legThickness = 1;
+  legColor = Number(tableMaterials[2].replace(/#/, "0x"));
 }
-
+// tableMaterials[2].replace(/#/,"0x")
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
