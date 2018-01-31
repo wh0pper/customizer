@@ -66,10 +66,13 @@ camera.lookAt(new THREE.Vector3(0,0,0));
 //table top geometry
 
 var topGeometry = new THREE.BoxGeometry( tableLength, 4, tableWidth );
-var topMaterial = new THREE.MeshLambertMaterial( { color: 0xd2b48c } );
+var topMaterial = new THREE.MeshLambertMaterial();
+
 var tableTop = new THREE.Mesh( topGeometry, topMaterial );
 tableTop.position.set( 0, (tableHeight+4)/2, 0 )
 scene.add( tableTop );
+
+
 
 //table legs geom
 var legGeometry = new THREE.BoxGeometry( legThickness, tableHeight, legThickness );
@@ -83,6 +86,97 @@ legThree.position.set( -(tableLength-legThickness)/2, 0, -(tableWidth-legThickne
 var legFour = legThree.clone();
 legFour.position.set( (tableLength-legThickness)/2, 0, -(tableWidth-legThickness)/2 );
 scene.add( legOne, legTwo, legThree, legFour );
+
+//color to HSV - tween animatio approach
+// THREE.Color.prototype.getHSV = function()
+// {
+//     var rr, gg, bb,
+//         h, s,
+//         r = this.r,
+//         g = this.g,
+//         b = this.b,
+//         v = Math.max(r, g, b),
+//         diff = v - Math.min(r, g, b),
+//         diffc = function(c)
+//         {
+//             return (v - c) / 6 / diff + 1 / 2;
+//         };
+//
+//     if (diff == 0) {
+//         h = s = 0;
+//     } else {
+//         s = diff / v;
+//         rr = diffc(r);
+//         gg = diffc(g);
+//         bb = diffc(b);
+//
+//         if (r === v) {
+//             h = bb - gg;
+//         } else if (g === v) {
+//             h = (1 / 3) + rr - bb;
+//         } else if (b === v) {
+//             h = (2 / 3) + gg - rr;
+//         }
+//         if (h < 0) {
+//             h += 1;
+//         } else if (h > 1) {
+//             h -= 1;
+//         }
+//     }
+//     return {
+//         h: h,
+//         s: s,
+//         v: v
+//     };
+// };
+// //color animation tween
+// var current
+//
+// var colorTween = new TWEEN.Tween(tableTop.material.color.getHSV())
+//     .to({h: 217, s: 0, v: 0}, 2000)
+//     .easing(TWEEN.Easing.Quartic.In)
+//     .onUpdate(
+//         function()
+//         {
+//             tableTop.material.color.setHSV(this.h, this.s, this.v);
+//         }
+//     )
+//     .start();
+
+//hardcode color animation
+
+var originalColor = {h:.1, s:.38, l:.64};//hsv(34°, 33%, 82%)
+var destinationColor = {h:0, s:0, l:0};
+
+
+
+var steps = 20;
+function animateColor(orig, dest) {
+  var newColor = {h: orig.h, s: orig.s, l: orig.l};
+  var hDiff = dest.h - orig.h;
+  var sDiff = dest.s - orig.s;
+  var lDiff = dest.l - orig.l;
+  var hStep = hDiff/steps;
+  var sStep = sDiff/steps;
+  var lStep = lDiff/steps;
+
+  function animateLoop() {
+    setTimeout(function() {
+      console.log(newColor.h, newColor.s, newColor.l)
+      tableTop.material.color.setHSL(newColor.h, newColor.s, newColor.l);
+      if (newColor.h > dest.h) {
+        newColor.h += hStep;
+        newColor.s += sStep;
+        newColor.l += lStep;
+        animateLoop();
+      }
+
+    }, 100);
+  }
+  animateLoop();
+}
+
+animateColor(originalColor, destinationColor);
 
 //lightsource
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 ); // soft white light
